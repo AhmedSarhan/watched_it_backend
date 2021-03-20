@@ -55,14 +55,13 @@ sequelize
   // .sync({ force: true })
   .sync()
   .then(() => {
-    //console.log('up and running');
+    console.log('up and running');
   })
   .catch((err) => {
-    //console.log('Error: ' + err);
+    console.log('Error: ' + err);
   });
 
 // Export the server middleware
-module.exports = {
-  path: '/api',
-  handler: app,
-};
+const port = process.env.PORT || 3050;
+
+app.listen(port, () => console.log('started on ' + port));

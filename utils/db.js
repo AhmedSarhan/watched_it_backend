@@ -1,7 +1,9 @@
 const { Sequelize } = require('sequelize');
+import dotenv from 'dotenv';
 
+dotenv.config();
 // localhost db
-// const sequelize = new Sequelize('testing', 'root', 'my_password', {
+// const sequelize = new Sequelize('testing', 'root', 'myPass', {
 //   dialect: 'mysql',
 //   host: 'localhost',
 // });
