@@ -107,7 +107,6 @@ module.exports.login = [
               email: user.email,
               username: user.username,
             };
-            req.session.userId = loadedUser.id;
             return res.status(200).json({
               user: {
                 ...loadedUser,

@@ -6,11 +6,16 @@ const Movie = require('../models/movie');
 exports.getWatchList = (req, res, next) => {
   console.log('session', req.session);
   console.log('request', req);
-  const current_user_id = req.session.userId;
+  const current_user_id = req.userId;
   const watchType = req.query.type;
   const watchStateStr = req.query.watched;
   let watchState = watchStateStr === 'false' ? false : true;
   let current_user;
+  if (!req.userId) {
+    return res.status(400).json({
+      message: 'unauthenticated',
+    });
+  }
   return User.findByPk(current_user_id)
     .then((user) => {
       current_user = user;
@@ -53,9 +58,14 @@ exports.getWatchList = (req, res, next) => {
 
 // add a movie to user watch list
 exports.postWatchList = (req, res, next) => {
-  const current_user_id = req.session.userId;
+  const current_user_id = req.userId;
   //console.log(req);
   //console.log(req.session.user);
+  if (!req.userId) {
+    return res.status(400).json({
+      message: 'unauthenticated',
+    });
+  }
   let movieId = req.params.id;
   let movieState = req.body.watched;
   let addedMovie = req.body.movie;
@@ -111,9 +121,14 @@ exports.postWatchList = (req, res, next) => {
 
 // remove a movie from the user watch list
 exports.deleteFromWatchList = (req, res, next) => {
-  const current_user_id = req.session.userId;
+  const current_user_id = req.userId;
   let movieId = req.params.id;
   let current_user;
+  if (!req.userId) {
+    return res.status(400).json({
+      message: 'unauthenticated',
+    });
+  }
   return User.findByPk(current_user_id)
     .then((user) => {
       current_user = user;
@@ -142,10 +157,15 @@ exports.deleteFromWatchList = (req, res, next) => {
 };
 // load the user favorites
 exports.getFavorites = (req, res, next) => {
-  const current_user_id = req.session.userId;
+  const current_user_id = req.userId;
   const favsType = req.query.type;
   //console.log('request', req);
   let current_user;
+  if (!req.userId) {
+    return res.status(400).json({
+      message: 'unauthenticated',
+    });
+  }
   return User.findByPk(current_user_id)
     .then((user) => {
       current_user = user;
@@ -178,12 +198,17 @@ exports.getFavorites = (req, res, next) => {
 
 // add a movie to the users favorite list
 exports.postFavorites = (req, res, next) => {
-  const current_user_id = req.session.userId;
+  const current_user_id = req.userId;
   let movieId = req.params.id;
   let addedMovie = req.body.movie;
   let fetchedFavs;
   let movieLatestState;
   let current_user;
+  if (!req.userId) {
+    return res.status(400).json({
+      message: 'unauthenticated',
+    });
+  }
   return User.findByPk(current_user_id)
     .then((user) => {
       current_user = user;
@@ -228,9 +253,14 @@ exports.postFavorites = (req, res, next) => {
 
 // remove a movie from the user favorite list
 exports.deleteFromFavorites = (req, res, next) => {
-  const current_user_id = req.session.userId;
+  const current_user_id = req.userId;
   let movieId = req.params.id;
   let current_user;
+  if (!req.userId) {
+    return res.status(400).json({
+      message: 'unauthenticated',
+    });
+  }
   return User.findByPk(current_user_id)
     .then((user) => {
       current_user = user;

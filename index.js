@@ -1,6 +1,5 @@
 const express = require('express');
 const sequelize = require('./utils/db');
-const session = require('express-session');
 const User = require('./models/user');
 const Favorites = require('./models/favorites');
 const FavoritesItem = require('./models/favorites-item');
@@ -22,18 +21,11 @@ app.use(express.urlencoded({ limit: '30mb', extended: true }));
 
 app.use(cors());
 app.options('*', cors());
-app.use(
-  session({
-    secret: 'application_secret',
-    resave: false,
-    saveUninitialized: false,
-  })
-);
 
 // Use API Routes
 app.use(users);
 app.use(movies);
-app.use('/', (req, res) => {
+app.get('/', (req, res) => {
   res.send('Hello World');
 });
 User.hasMany(Movie);
