@@ -4,8 +4,6 @@ const Movie = require('../models/movie');
 
 // load the user watch list
 exports.getWatchList = (req, res, next) => {
-  console.log('session', req.session);
-  console.log('request', req);
   const current_user_id = req.userId;
   const watchType = req.query.type;
   const watchStateStr = req.query.watched;
@@ -60,7 +58,6 @@ exports.getWatchList = (req, res, next) => {
 exports.postWatchList = (req, res, next) => {
   const current_user_id = req.userId;
   //console.log(req);
-  //console.log(req.session.user);
   if (!req.userId) {
     return res.status(400).json({
       message: 'unauthenticated',
