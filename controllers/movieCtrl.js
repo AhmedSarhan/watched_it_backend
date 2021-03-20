@@ -4,6 +4,7 @@ const Movie = require('../models/movie');
 
 // load the user watch list
 exports.getWatchList = (req, res, next) => {
+  console.log('userId', req.userId);
   const current_user_id = req.userId;
   const watchType = req.query.type;
   const watchStateStr = req.query.watched;
