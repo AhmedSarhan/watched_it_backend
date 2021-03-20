@@ -17,8 +17,8 @@ const movies = require('./routes/movies');
 const app = express();
 
 // Init body-parser options (inbuilt with express)
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: '30mb', extended: true }));
+app.use(express.urlencoded({ limit: '30mb', extended: true }));
 
 app.use(cors());
 app.options('*', cors());
@@ -33,7 +33,9 @@ app.use(
 // Use API Routes
 app.use(users);
 app.use(movies);
-
+app.use('/', (req, res) => {
+  res.send('Hello World');
+});
 User.hasMany(Movie);
 User.hasOne(WatchList);
 User.hasOne(Favorites);
@@ -62,6 +64,6 @@ sequelize
   });
 
 // Export the server middleware
-const port = process.env.PORT || 3050;
+const port = process.env.PORT || 4000;
 
 app.listen(port, () => console.log('started on ' + port));
